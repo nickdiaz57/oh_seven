@@ -1,17 +1,17 @@
 class OhSeven::CLI
-    include ShipMethods
+    include ShipMethods, EngiMethods
     def call
         puts "  ---  o7, CMDR. Welcome to the Elite Dangerous Quick Reference Helper.  ---  ".colorize(:light_red)
         option_list
         main_menu
+        goodbye_message
     end
 
     def option_list
+        puts "  ---  Main Menu  ---  ".colorize(:light_yellow)
         puts <<-MENU
         1. Ship Information
         2. Engineer Information
-        3. Station Finder
-        4. Scoopable Star Finder
         MENU
     end
 
@@ -25,32 +25,14 @@ class OhSeven::CLI
                 ship_options
                 ship_info
             when "2","engineer information","engineer info"
+                engi_options
                 engi_info
-            when "3","station finder"
-                find_station
-            when "4","scoopable star finder","star finder"
-                find_star
             when "menu"
                 option_list
-            when "exit"
-                goodbye_message
             else
-                puts "Invalid input. Please choose an option from the menu. Type 'menu' to see the list again, or 'exit' to end."
+                puts "Invalid input. Please choose an option from the menu. Type 'menu' to see the list again, or 'exit' to end." unless choice == 'exit'
             end
         end
-    end
-
-
-    def engi_info
-        puts "engi info"
-    end
-
-    def find_station
-        puts "station found"
-    end
-
-    def find_star
-        puts "star found"
     end
 
     def goodbye_message
