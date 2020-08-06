@@ -1,5 +1,5 @@
 class Ship
-    attr_accessor :name, :description, :price, :size, :speed, :armor, :shield, :mass
+    attr_accessor :name, :description, :price, :speed, :armor, :shield, :mass
     attr_reader :manufacturer
     extend Concerns
 

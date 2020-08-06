@@ -4,17 +4,17 @@ module ShipMethods
         ship_options
         choice = nil
         while choice != 'back'
-            puts "What would you like to do?"
+            print "What would you like to do?  "
                 choice = gets.strip.downcase
             case choice
             when 'menu'
                 ship_options
             when '1'
-                ships_by_alph
+                sort_list("name")
             when '2'
                 ships_by_man
             when '3'
-                ships_by_price
+                sort_list("price")
             when '4'
                 ships_by_attr
             else
@@ -23,11 +23,21 @@ module ShipMethods
         end
     end
     
+    def ship_options
+        puts "  ---  Ship Information  ---  ".colorize(:light_yellow)
+        puts <<-SHIPMENU
+        1. List all ships in alphabetical order
+        2. List ships by a particular manufacturer
+        3. Sort ships by price
+        4. Sort ships by another attribute
+        SHIPMENU
+    end
+    
     def display_ship(input)
         return unless Ship.find_by_name(input)
         ship = Ship.find_by_name(input)
         puts "     #{ship.name.colorize(:light_red)}"
-        puts "     #{ship.description.colorize(:light_cyan)}"
+        puts "#{ship.description.colorize(:light_cyan)}"
         puts <<-SHIP
         Manufactured by:  #{ship.manufacturer.name.colorize(:light_cyan)}
         Base Price:  #{ship.price.colorize(:light_cyan)}
@@ -38,20 +48,11 @@ module ShipMethods
         SHIP
     end
 
-    def ship_options
-        puts "  ---  Ship Information  ---  ".colorize(:light_yellow)
-        puts <<-SHIPMENU
-        1. List all ships in alphabetical order
-        2. List ships by a particular manufacturer
-        3. Sort ships by price
-        4. Sort ships by another attribute
-        SHIPMENU
-    end
-
-    def ships_by_alph
-        list = Ship.all.sort {|a, b| a.name <=> b.name}
-        print_list(list)
-        select_ship(list)
+    def display_man(input)
+        return unless Manufacturer.find_by_name(input)
+        man = Manufacturer.find_by_name(input)
+        puts man.name.colorize(:light_red)
+        man.ships.each {|s| puts s.colorize(:light_cyan)}
     end
 
     def ships_by_attr
@@ -61,67 +62,42 @@ module ShipMethods
         3. Base Speed
         4. Hull Mass
         LIST
-        print "Please choose an attribute."
+        print "Please choose an attribute.  "
         choice = gets.strip.downcase
         case choice
         when "1", "armor"
-            arm
+            sort_list("armor")
         when "2", "shields"
-            shld
+            sort_list("shield")
         when "3", "base speed", "speed"
-            spd
+            sort_list("speed")
         when "4", "hull mass", "mass"
-            hull
+            sort_list("mass")
+        else
+            puts "Invalid input."
         end
     end
 
-    def arm
-        armor_list = Ship.all.sort {|a, b| a.armor.to_i <=> b.armor.to_i}
-        print_list(armor_list)
-        select_ship(armor_list)
-    end
-
-    def shld
-        shield_list = Ship.all.sort {|a, b| a.shield.to_i <=> b.shield.to_i}
-        print_list(shield_list)
-        select_ship(shield_list)
-    end
-
-    def spd
-        speed_list = Ship.all.sort {|a, b| a.speed.gsub(" m/s", "").to_i <=> b.speed.gsub(" m/s", "").to_i}
-        print_list(speed_list)
-        select_ship(speed_list)
-    end
-
-    def hull
-        hull_list = Ship.all.sort {|a, b| a.mass.to_i <=> b.mass.to_i}
-        print_list(hull_list)
-        select_ship(hull_list)
+    def sort_list(attr)
+        sorted = Ship.all.sort {|a, b| a.instance_variable_get(("@" + attr).to_sym).gsub(",", "").gsub(" m/s", "").to_i <=> b.instance_variable_get(("@" + attr).to_sym).gsub(",", "").gsub(" m/s", "").to_i}
+        print_list(sorted)
+        select_ship(sorted)
     end
 
     def ships_by_man
-        Manufacturer.all.each_with_index {|m, i| puts "#{i + 1}. #{m.name}"}
-        puts "Please choose a manufacturer."
+        list = Manufacturer.all.sort {|a, b| a.name <=> b.name}
+        print_list(list)
+        print "Please choose a manufacturer.  "
         choice = gets.strip.downcase
         if choice.to_i == 0
-            man = Manufacturer.find_by_name(choice)
-            puts man.name.colorize(:light_red)
-            man.ships.each {|s| puts s.colorize(:light_cyan)}
+            display_man(choice)
         else
-            man = Manufacturer.all[choice.to_i - 1]
-            puts man.name.colorize(:light_red)
-            man.ships.each {|s| puts s.colorize(:light_cyan)}
+            display_man(list[choice.to_i - 1].name)
         end
     end
 
-    def ships_by_price
-        list = Ship.all.sort {|a, b| a.price.gsub("," , "").to_i <=> b.price.gsub("," , "").to_i}
-        print_list(list)
-        select_ship(list)
-    end
-
     def select_ship(list)
-        print "Please choose a ship to learn more about."
+        print "Please choose a ship to learn more about.  "
         choice = gets.strip.downcase
         if choice.to_i == 0
             display_ship(choice)

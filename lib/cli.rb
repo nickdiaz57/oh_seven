@@ -18,7 +18,7 @@ class OhSeven::CLI
     def main_menu
         choice = nil
         while choice != 'exit'
-            puts "Please select an option from the menu, or type 'exit' to end the application."
+            print "Please select an option from the menu, or type 'exit' to end the application.  "
             choice = gets.strip.downcase
             case choice
             when "1","ship information","ship info"

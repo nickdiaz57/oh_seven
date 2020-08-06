@@ -4,7 +4,7 @@ module EngiMethods
         engi_options
         choice = nil
         while choice != 'back'
-            puts "What would you like to do?"
+            print "What would you like to do?  "
                 choice = gets.strip.downcase
             case choice
             when 'menu'
@@ -42,7 +42,7 @@ module EngiMethods
 
     def engi_by_specs
         print_list(Component.all)
-        puts "Please choose a component."
+        print "Please choose a component.  "
         choice = gets.strip.downcase
         if choice.to_i == 0
             display_component(choice)
@@ -56,7 +56,7 @@ module EngiMethods
     end
 
     def select_engi(list)
-        print "Please choose an engineer to learn more about."
+        print "Please choose an engineer to learn more about.  "
         choice = gets.strip.downcase
         if choice.to_i == 0
             display_engi(choice)
