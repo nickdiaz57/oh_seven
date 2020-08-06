@@ -22,15 +22,13 @@ class OhSeven::CLI
             choice = gets.strip.downcase
             case choice
             when "1","ship information","ship info"
-                ship_options
                 ship_info
             when "2","engineer information","engineer info"
-                engi_options
                 engi_info
             when "menu"
                 option_list
             else
-                puts "Invalid input. Please choose an option from the menu. Type 'menu' to see the list again, or 'exit' to end." unless choice == 'exit'
+                puts "Invalid input. Type 'menu' to see the list again, or 'exit' to end." unless choice == 'exit'
             end
         end
     end

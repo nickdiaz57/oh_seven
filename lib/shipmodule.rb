@@ -1,6 +1,7 @@
 module ShipMethods
     
     def ship_info
+        ship_options
         choice = nil
         while choice != 'back'
             puts "What would you like to do?"
@@ -17,13 +18,13 @@ module ShipMethods
             when '4'
                 ships_by_attr
             else
-                puts "Invalid input.  Please choose an option from the menu.  Type 'back' to return to the main menu." unless choice == 'back'
+                puts "Invalid input.  Please choose an option from the menu.  Type 'menu' to see the menu again, or type 'back' to return to the main menu." unless choice == 'back'
             end
         end
     end
     
     def display_ship(input)
-        return if input == 'back'
+        return unless Ship.find_by_name(input)
         ship = Ship.find_by_name(input)
         puts "     #{ship.name.colorize(:light_red)}"
         puts "     #{ship.description.colorize(:light_cyan)}"

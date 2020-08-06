@@ -1,6 +1,7 @@
 module EngiMethods
     
     def engi_info
+        engi_options
         choice = nil
         while choice != 'back'
             puts "What would you like to do?"
@@ -13,21 +14,21 @@ module EngiMethods
             when '2'
                 engi_by_specs
             else
-                puts "Invalid input.  Please choose an option from the menu.  Type 'back' to return to the main menu." unless choice == 'back'
+                puts "Invalid input.  Please choose an option from the menu.  Type 'menu' to see the menu again, or type 'back' to return to the main menu." unless choice == 'back'
             end
         end
     end
 
     def display_engi(input)
-        return if input == 'back'
+        return unless Engineer.find_by_name(input)
         engi = Engineer.find_by_name(input)
         puts "     #{engi.name.colorize(:light_red)}"
-        puts "Based out of  #{engi.base}, #{engi.sys}".colorize(:light_cyan)
+        puts "Based out of #{engi.base} in the #{engi.sys} system".colorize(:light_cyan)
         engi.specs.each {|s| puts s.colorize(:light_cyan)}
     end
 
     def display_component(input)
-        return if input == 'back'
+        return unless Component.find_by_name(input)
         comp = Component.find_by_name(input)
         puts comp.name.colorize(:light_red)
         comp.engineers.each {|e| puts e.name.colorize(:light_cyan)}
