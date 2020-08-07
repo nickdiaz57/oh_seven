@@ -4,7 +4,7 @@ module EngiMethods
         engi_options
         choice = nil
         while choice != 'back'
-            print "What would you like to do?  "
+            print "What would you like to do?  ".colorize(:light_green)
                 choice = gets.strip.downcase
             case choice
             when 'menu'
@@ -14,7 +14,7 @@ module EngiMethods
             when '2'
                 engi_by_specs
             else
-                puts "Invalid input.  Please choose an option from the menu.  Type 'menu' to see the menu again, or type 'back' to return to the main menu." unless choice == 'back'
+                puts "Invalid input.  Please choose an option from the menu.  Type 'menu' to see the menu again, or type 'back' to return to the main menu.".colorize(:light_magenta) unless choice == 'back'
             end
         end
     end
@@ -42,7 +42,7 @@ module EngiMethods
 
     def engi_by_specs
         print_list(Component.all)
-        print "Please choose a component.  "
+        print "Please choose a component.  ".colorize(:light_green)
         choice = gets.strip.downcase
         if choice.to_i == 0
             display_component(choice)
@@ -56,7 +56,7 @@ module EngiMethods
     end
 
     def select_engi(list)
-        print "Please choose an engineer to learn more about.  "
+        print "Please choose an engineer to learn more about.  ".colorize(:light_green)
         choice = gets.strip.downcase
         if choice.to_i == 0
             display_engi(choice)

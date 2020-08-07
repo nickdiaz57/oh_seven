@@ -18,7 +18,7 @@ class OhSeven::CLI
     def main_menu
         choice = nil
         while choice != 'exit'
-            print "Please select an option from the menu, or type 'exit' to end the application.  "
+            print "Please select an option from the menu, or type 'exit' to end the application.  ".colorize(:light_green)
             choice = gets.strip.downcase
             case choice
             when "1","ship information","ship info"
@@ -28,7 +28,7 @@ class OhSeven::CLI
             when "menu"
                 option_list
             else
-                puts "Invalid input. Type 'menu' to see the list again, or 'exit' to end." unless choice == 'exit'
+                puts "Invalid input. Type 'menu' to see the list again, or 'exit' to end.".colorize(:light_magenta) unless choice == 'exit'
             end
         end
     end

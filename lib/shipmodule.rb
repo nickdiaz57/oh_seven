@@ -4,13 +4,13 @@ module ShipMethods
         ship_options
         choice = nil
         while choice != 'back'
-            print "What would you like to do?  "
+            print "What would you like to do?  ".colorize(:light_green)
                 choice = gets.strip.downcase
             case choice
             when 'menu'
                 ship_options
             when '1'
-                sort_list("name")
+                ships_by_name
             when '2'
                 ships_by_man
             when '3'
@@ -18,7 +18,7 @@ module ShipMethods
             when '4'
                 ships_by_attr
             else
-                puts "Invalid input.  Please choose an option from the menu.  Type 'menu' to see the menu again, or type 'back' to return to the main menu." unless choice == 'back'
+                puts "Invalid input.  Please choose an option from the menu.  Type 'menu' to see the menu again, or type 'back' to return to the main menu.".colorize(:light_magenta) unless choice == 'back'
             end
         end
     end
@@ -62,7 +62,7 @@ module ShipMethods
         3. Base Speed
         4. Hull Mass
         LIST
-        print "Please choose an attribute.  "
+        print "Please choose an attribute.  ".colorize(:light_green)
         choice = gets.strip.downcase
         case choice
         when "1", "armor"
@@ -74,8 +74,14 @@ module ShipMethods
         when "4", "hull mass", "mass"
             sort_list("mass")
         else
-            puts "Invalid input."
+            puts "Invalid input.".colorize(:light_magenta)
         end
+    end
+
+    def ships_by_name
+        list = Ship.all.sort {|a, b| a.name <=> b.name}
+        print_list(list)
+        select_ship(list)
     end
 
     def sort_list(attr)
@@ -87,7 +93,7 @@ module ShipMethods
     def ships_by_man
         list = Manufacturer.all.sort {|a, b| a.name <=> b.name}
         print_list(list)
-        print "Please choose a manufacturer.  "
+        print "Please choose a manufacturer.  ".colorize(:light_green)
         choice = gets.strip.downcase
         if choice.to_i == 0
             display_man(choice)
@@ -97,7 +103,7 @@ module ShipMethods
     end
 
     def select_ship(list)
-        print "Please choose a ship to learn more about.  "
+        print "Please choose a ship to learn more about.  ".colorize(:light_green)
         choice = gets.strip.downcase
         if choice.to_i == 0
             display_ship(choice)
