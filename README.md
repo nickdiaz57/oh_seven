@@ -7,7 +7,7 @@ This program provides a CLI that allows users to view information about the ship
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'oh_seven'
+gem 'oh_seven', :git => "git://github.com/.nickdiaz57/oh_seven.git"
 ```
 
 And then execute:
