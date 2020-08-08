@@ -1,20 +1,18 @@
 module EngiMethods
     
     def engi_info
-        engi_options
         choice = nil
         while choice != 'back'
+            engi_options
             print "What would you like to do?  ".colorize(:light_green)
                 choice = gets.strip.downcase
             case choice
-            when 'menu'
-                engi_options
             when '1'
                engi_list
             when '2'
                 engi_by_specs
             else
-                puts "Invalid input.  Please choose an option from the menu.  Type 'menu' to see the menu again, or type 'back' to return to the main menu.".colorize(:light_magenta) unless choice == 'back'
+                puts "Invalid input.  Please choose an option from the menu, or type 'back' to return to the main menu.".colorize(:light_magenta) unless choice == 'back'
             end
         end
     end
@@ -22,7 +20,7 @@ module EngiMethods
     def display_engi(input)
         return unless Engineer.find_by_name(input)
         engi = Engineer.find_by_name(input)
-        puts "     #{engi.name.colorize(:light_red)}"
+        puts "\n     #{engi.name.colorize(:light_red)}"
         puts "Based out of #{engi.base} in the #{engi.sys} system".colorize(:light_cyan)
         engi.specs.each {|s| puts s.colorize(:light_cyan)}
     end
@@ -30,7 +28,7 @@ module EngiMethods
     def display_component(input)
         return unless Component.find_by_name(input)
         comp = Component.find_by_name(input)
-        puts comp.name.colorize(:light_red)
+        puts "\n     #{comp.name.colorize(:light_red)}"
         comp.engineers.each {|e| puts e.name.colorize(:light_cyan)}
     end
 
@@ -66,10 +64,11 @@ module EngiMethods
     end
 
     def engi_options
-        puts "  ---  Engineer Options  ---  ".colorize(:light_yellow)
+        puts "\n  ---  Engineer Options  ---  ".colorize(:light_yellow)
         puts <<-ENGIMENU
         1. List all engineers
         2. Search for engineers specializing in a particular component
+        
         ENGIMENU
     end
 end

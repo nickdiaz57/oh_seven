@@ -1,14 +1,12 @@
 module ShipMethods
     
     def ship_info
-        ship_options
         choice = nil
         while choice != 'back'
+            ship_options
             print "What would you like to do?  ".colorize(:light_green)
                 choice = gets.strip.downcase
             case choice
-            when 'menu'
-                ship_options
             when '1'
                 ships_by_name
             when '2'
@@ -18,49 +16,54 @@ module ShipMethods
             when '4'
                 ships_by_attr
             else
-                puts "Invalid input.  Please choose an option from the menu.  Type 'menu' to see the menu again, or type 'back' to return to the main menu.".colorize(:light_magenta) unless choice == 'back'
+                puts "Invalid input.  Please choose an option from the menu, or type 'back' to return to the main menu.".colorize(:light_magenta) unless choice == 'back'
             end
         end
     end
     
     def ship_options
-        puts "  ---  Ship Information  ---  ".colorize(:light_yellow)
+        puts "\n  ---  Ship Information  ---  ".colorize(:light_yellow)
         puts <<-SHIPMENU
         1. List all ships in alphabetical order
         2. List ships by a particular manufacturer
         3. Sort ships by price
         4. Sort ships by another attribute
+
         SHIPMENU
     end
     
     def display_ship(input)
         return unless Ship.find_by_name(input)
         ship = Ship.find_by_name(input)
-        puts "     #{ship.name.colorize(:light_red)}"
+        puts "\n     #{ship.name.colorize(:light_red)}"
         puts "#{ship.description.colorize(:light_cyan)}"
         puts <<-SHIP
+
         Manufactured by:  #{ship.manufacturer.name.colorize(:light_cyan)}
         Base Price:  #{ship.price.colorize(:light_cyan)}
         Hull Mass:  #{ship.mass.colorize(:light_cyan)}
         Base Speed:  #{ship.speed.colorize(:light_cyan)}
         Armor:  #{ship.armor.colorize(:light_cyan)}
         Shields:  #{ship.shield.colorize(:light_cyan)}
+
         SHIP
     end
 
     def display_man(input)
         return unless Manufacturer.find_by_name(input)
         man = Manufacturer.find_by_name(input)
-        puts man.name.colorize(:light_red)
+        puts "\n     #{man.name.colorize(:light_red)}"
         man.ships.each {|s| puts s.colorize(:light_cyan)}
     end
 
     def ships_by_attr
         puts <<-LIST
+
         1. Armor
         2. Shields
         3. Base Speed
         4. Hull Mass
+
         LIST
         print "Please choose an attribute.  ".colorize(:light_green)
         choice = gets.strip.downcase

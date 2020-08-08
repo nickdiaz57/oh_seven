@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-Run oh_seven after installing the gem.
+Run oh-seven after installing the gem.
 
 ## Development
 
