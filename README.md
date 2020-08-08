@@ -1,8 +1,6 @@
 # OhSeven
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/oh_seven`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This program provides a CLI that allows users to view information about the ships and engineers of Elite Dangerous. Users are able to retrieve a list of all ships currently playable in the game and find information about a ship of their choosing, including the manufacturer, price, armor, shield, speed, and hull mass values.  Users can also retrieve a list of all engineers accessible in the game, along with their locations and the components they work on.
 
 ## Installation
 
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Run oh_seven after installing the gem.
 
 ## Development
 

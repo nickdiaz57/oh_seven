@@ -1,6 +1,3 @@
-require 'nokogiri'
-require 'open-uri'
-
 class Scraper
     def get_ships
         doc = Nokogiri::HTML(open("http://www.elitedangerous.com/ships"))
@@ -8,8 +5,7 @@ class Scraper
             ship = Ship.create(s.css("h3").text)
             ship.manufacturer = s.css("p").text
             add_description(ship, s)
-            data = []
-            s.css("dl dd").each {|d| data << d.text}
+            data = s.css("dl dd").collect {|d| d.text}
             add_stats(ship, data)
         end
     end
@@ -39,10 +35,8 @@ class Scraper
     end
 
     def add_specialties(engi, e)
-        mods = []
-        grades = []
-        e.css("span.small").each {|v| mods << v.text}
-        e.css("span.smaller").each {|v| grades << v.text}
+        mods = e.css("span.small").collect {|v| v.text}
+        grades = e.css("span.smaller").collect {|v| v.text}
         mods.each do |m|
             c = Component.find_or_create_by_name(m)
             c.add_engineer(engi)
@@ -50,6 +44,8 @@ class Scraper
         engi.specs = grades.zip(mods).collect {|s| s.join(" ")}
     end
 end
-
+puts "Scraping data..."
 Scraper.new.get_ships
+puts "Ships loaded."
 Scraper.new.get_engineers
+puts "Engineers loaded."
