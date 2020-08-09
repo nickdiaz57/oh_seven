@@ -1,6 +1,6 @@
 # OhSeven
 
-This program provides a CLI that allows users to view information about the ships and engineers of Elite Dangerous. Users are able to retrieve a list of all ships currently playable in the game and find information about a ship of their choosing, including the manufacturer, price, armor, shield, speed, and hull mass values.  Users can also retrieve a list of all engineers accessible in the game, along with their locations and the components they work on.
+This program provides a CLI that scrapes data from the [Elite Dangerous homepage](http://www.elitedangerous.com/ships) and the [INARA companion website](http://www.inara.cz/galaxy-engineers) to allow users to view information about the ships and engineers of Elite Dangerous. Users are able to retrieve a list of all ships currently playable in the game and find information about a ship of their choosing, including the manufacturer, price, armor, shield, speed, and hull mass values.  Users can also retrieve a list of all engineers accessible in the game, along with their locations and the components they work on.
 
 ## Installation
 
